@@ -29,7 +29,7 @@ export default function InputText() {
             <div className="container mt-3">
                 <h2>Your text summary</h2>
                 <p><span>{text != "" ? text.split(" ").length : 0}</span> Words, <span>{text.length}</span> Characters.</p>
-                <p>{text != "" ? (0.008 * (text.split(" ").length)).toFixed(0) : 0} minutes read</p>
+                <p>{text != "" ? (0.008 * (text.split(" ").length)) : 0} minutes read</p>
                 <p></p>
             </div>
             <div className="container preview d-flex flex-column position-relative">
