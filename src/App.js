@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import InputText from './InputText';
 import React, { useState } from "react";
 import Alert from './Alert';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Switch, Route, Link } from "react-router-dom";
 import About from './About';
 
 
@@ -13,7 +13,7 @@ function App() {
     color: "#2C3333",
     backgroundColor: "white"
   });
-  const [btnText, setBtnText] = useState("Enable Dark Mode");
+  const [btnText, setBtnText] = useState("Enable DarkMode");
   const [alert, setAlert] = useState({
     Mssg: null,
     type: null
@@ -39,14 +39,14 @@ function App() {
         color: "#2C3333",
         backgroundColor: "white"
       })
-      setBtnText("Enable Dark Mode");
+      setBtnText("Enable DarkMode");
     }
     else {
       setColorMode({
         color: "white",
         backgroundColor: "#2C3333"
       })
-      setBtnText("Disable Dark Mode");
+      setBtnText("Disable DarkMode");
     }
   }
 
@@ -62,18 +62,16 @@ function App() {
             {/* <button className="btn btn-success my-3" onClick={toggleMode}>{btnText}</button> */}
             <div className="form-check form-switch mx-3 my-3 d-flex align-items-center gap-2" onClick={toggleMode}>
               <input className="form-check-input align-self-center" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-              <label className="form-check-label align-self-center" htmlFor="flexSwitchCheckDefault">Enable DarkMode</label>
+              <label className="form-check-label align-self-center" htmlFor="flexSwitchCheckDefault">{btnText}</label>
             </div>
           </div>
 
-          <Switch> {/* Basically switch ensures that only one route is active */}
-            <Route path="/about">
-              <About />
+          <Routes> {/* Basically switch ensures that only one route is active */}
+            <Route path="/about" element={<About />}>
             </Route>
-            <Route path="/">
-              <InputText showAlert={showAlert} />
+            <Route path="/" element={<InputText showAlert={showAlert} />}>
             </Route>
-          </Switch>
+          </Routes>
         </div >
       </div>
     </Router>
