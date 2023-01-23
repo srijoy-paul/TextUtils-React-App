@@ -4,15 +4,21 @@ export default function InputText(props) {
     const [preview, setPreview] = useState("");
     const handleClick = () => {
         const convertInUpperCase = text.toUpperCase();
-        text != "" ? setText(convertInUpperCase) : alert("Input Box is empty")
+        text !== "" ? setText(convertInUpperCase) : alert("Input Box is empty")
     }
     const handleClickPreview = () => {
-        text != "" ? setPreview(text) : alert("Input Box is empty");
-        props.showAlert("Preview Successful", "success");
+        if (text !== "") {
+            setPreview(text);
+            props.showAlert("Preview Successful", "success")
+                ;
+        }
+        else
+            alert("Input Box is empty")
+
     }
     const handleClickClear = () => {
-        text != "" ? setText("") : alert("Input Box is empty");
-        props.showAlert("Your text has been deleted.", "danger");
+        if (text !== "") { setText(""); props.showAlert("Your text has been deleted.", "danger"); } else alert("Input Box is empty");
+
     }
     const handleChange = (e) => {
         setText(e.target.value);
@@ -30,8 +36,8 @@ export default function InputText(props) {
             </div>
             <div className="container mt-3">
                 <h2>Your text summary</h2>
-                <p><span>{text != "" ? text.split(" ").length : 0}</span> Words, <span>{text.length}</span> Characters.</p>
-                <p>{text != "" ? (0.008 * (text.split(" ").length)).toFixed(3) : 0} minutes read</p>
+                <p><span>{text !== "" ? text.split(" ").length : 0}</span> Words, <span>{text.length}</span> Characters.</p>
+                <p>{text !== "" ? (0.008 * (text.split(" ").length)).toFixed(3) : 0} minutes read</p>
                 <p></p>
             </div>
             <div className="container preview d-flex flex-column position-relative">

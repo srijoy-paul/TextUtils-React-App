@@ -4,6 +4,8 @@ import Navbar from "./Navbar"
 import InputText from './InputText';
 import React, { useState } from "react";
 import Alert from './Alert';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import About from './About';
 
 
 function App() {
@@ -31,7 +33,7 @@ function App() {
     }, 2000);
   }
 
-  const toggleMode = () => {
+  const toggleMode = (color, bgColor) => {
     if (colorMode.backgroundColor === "#2C3333") {
       setColorMode({
         color: "#2C3333",
@@ -41,7 +43,7 @@ function App() {
     }
     else {
       setColorMode({
-        color: "#E5E5CB",
+        color: "white",
         backgroundColor: "#2C3333"
       })
       setBtnText("Disable Dark Mode");
@@ -49,23 +51,34 @@ function App() {
   }
 
   return (
-    <>
-      <div style={{ ...colorMode, height: "100%" }}>
+    <Router>
+      <Navbar />
+      <div style={{ height: "100vh" }}>
+        <div style={{ ...colorMode, height: "100%" }}>
 
-        < Navbar />
-        <Alert alertType={alert.type} alertMssg={alert.Mssg} />
-        <div className='container d-flex justify-content-end align-items-center'>
+          <Alert alertType={alert.type} alertMssg={alert.Mssg} />
+          <div className='container d-flex justify-content-end align-items-center'>
 
-          {/* <button className="btn btn-success my-3" onClick={toggleMode}>{btnText}</button> */}
-          <div className="form-check form-switch mx-3 my-3 d-flex align-items-center gap-2" onClick={toggleMode}>
-            <input className="form-check-input align-self-center" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-            <label className="form-check-label align-self-center" htmlFor="flexSwitchCheckDefault">Enable DarkMode</label>
+            {/* <button className="btn btn-success my-3" onClick={toggleMode}>{btnText}</button> */}
+            <div className="form-check form-switch mx-3 my-3 d-flex align-items-center gap-2" onClick={toggleMode}>
+              <input className="form-check-input align-self-center" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+              <label className="form-check-label align-self-center" htmlFor="flexSwitchCheckDefault">Enable DarkMode</label>
+            </div>
           </div>
-        </div>
-        <InputText showAlert={showAlert} />
-      </div>
 
-    </>
+          <Switch> {/* Basically switch ensures that only one route is active */}
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/">
+              <InputText showAlert={showAlert} />
+            </Route>
+          </Switch>
+        </div >
+      </div>
+    </Router>
+
+
   );
 }
 
