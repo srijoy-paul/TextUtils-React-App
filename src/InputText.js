@@ -2,9 +2,9 @@ import React, { useState } from "react";
 export default function InputText(props) {
     const [text, setText] = useState("");
     const [preview, setPreview] = useState("");
-    const handleClick = () => {
+    const handleClickUppercase = () => {
         const convertInUpperCase = text.toUpperCase();
-        text !== "" ? setText(convertInUpperCase) : alert("Input Box is empty")
+        text !== "" ? setText(convertInUpperCase) : props.showAlert("Your text box is empty.", "danger");
     }
     const handleClickPreview = () => {
         if (text !== "") {
@@ -12,16 +12,23 @@ export default function InputText(props) {
             props.showAlert("Preview Successful", "success")
                 ;
         }
-        else
-            alert("Input Box is empty")
+        else props.showAlert("Your text box is empty.", "danger");
 
     }
     const handleClickClear = () => {
-        if (text !== "") { setText(""); props.showAlert("Your text has been deleted.", "danger"); } else alert("Input Box is empty");
+        if (text !== "") { setText(""); props.showAlert("Your text has been deleted.", "success"); } else props.showAlert("Your text box is empty.", "danger");
 
     }
     const handleChange = (e) => {
         setText(e.target.value);
+    }
+
+    const handleCopy = () => {
+        if (document.getElementById("preview").textContent !== "")
+            navigator.clipboard.writeText(text).then((success) => props.showAlert("Text copied!", "success"), (error) => console.log("Error Copying text")); //using the navigator clipboard api is an async operation - so once the text is copied successfully on the clipboard then the promise resolves or else if there is any problem in doing that it rejects the promise
+        else {
+            props.showAlert("Preview is not done yet", "danger")
+        }
     }
     return (
         <>
@@ -30,9 +37,9 @@ export default function InputText(props) {
                 <div className="mb-3">
                     <textarea onChange={handleChange} value={text} className="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
                 </div>
-                <button className='btn btn-success me-2' onClick={handleClick}>Convert Uppercase</button>
-                <button className='btn btn-success me-2' onClick={handleClickPreview}>Preview</button>
-                <button className='btn btn-danger' onClick={handleClickClear}>Clear Box</button>
+                <button className='btn btn-success me-2 my-1' onClick={handleClickUppercase}>Convert Uppercase</button>
+                <button className='btn btn-success me-2 my-1' onClick={handleClickPreview}>Preview</button>
+                <button className='btn btn-danger me-2 my-1' onClick={handleClickClear}>Clear Box</button>
             </div>
             <div className="container mt-3">
                 <h2>Your text summary</h2>
@@ -42,8 +49,8 @@ export default function InputText(props) {
             </div>
             <div className="container preview d-flex flex-column position-relative">
                 <h2>Text Preview</h2>
-                <button className="btn btn-success align-self-end position-absolute">Copy</button>
-                <p className="shadow-sm p-3 mb-5 bg-body rounded" style={{ color: "#2C3333", backgroundColor: "#395B64" }}>{preview}</p>
+                <button onClick={handleCopy} className="btn btn-success align-self-end position-absolute">Copy</button>
+                <p id="preview" className="shadow-sm p-3 mb-5 bg-body rounded" style={{ color: "#2C3333", backgroundColor: "#395B64" }}>{preview}</p>
             </div>
         </>);
 }

@@ -56,11 +56,13 @@ function App() {
       <div style={{ height: "100vh" }}>
         <div style={{ ...colorMode, height: "100%" }}>
 
-          <Alert alertType={alert.type} alertMssg={alert.Mssg} />
+          <div style={{ height: "45px" }}>
+            <Alert alertType={alert.type} alertMssg={alert.Mssg} />
+          </div>
           <div className='container d-flex justify-content-end align-items-center'>
 
             {/* <button className="btn btn-success my-3" onClick={toggleMode}>{btnText}</button> */}
-            <div className="form-check form-switch mx-3 my-3 d-flex align-items-center gap-2" onClick={toggleMode}>
+            <div className="form-check form-switch mx-3 my-2 d-flex align-items-center gap-2" onClick={toggleMode}>
               <input className="form-check-input align-self-center" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
               <label className="form-check-label align-self-center" htmlFor="flexSwitchCheckDefault">{btnText}</label>
             </div>
